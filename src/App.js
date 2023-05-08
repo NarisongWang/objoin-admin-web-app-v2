@@ -28,7 +28,10 @@ const BasicLayoutWithLeftMenu = () => {
         showMobileMenu={showMobileMenu}
         setShowMobileMenu={setShowMobileMenu}
       />
-      <LeftMenu showMobileMenu={showMobileMenu} />
+      <LeftMenu
+        showMobileMenu={showMobileMenu}
+        setShowMobileMenu={setShowMobileMenu}
+      />
       <div className="p-5 pt-24 md:pt-28 pb-20 md:ml-64">
         <Outlet />
       </div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
 import { toast } from 'react-toastify';
 import Spinner from '../../components/Spinner';
@@ -68,7 +68,7 @@ const ResetPassword = () => {
               </svg>
             </button>
             <div className="font-thin text-cyan-700">
-              <a href="/sign-in">Sign in here!</a>
+              <Link to="/sign-in">Sign in here!</Link>
             </div>
             <div className="font-thin pt-4 text-center">
               © 2023 O'Brien Joinery PTY LTD. All Rights Reserved.

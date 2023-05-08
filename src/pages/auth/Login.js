@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import Spinner from '../../components/Spinner';
@@ -90,7 +90,7 @@ const Login = () => {
               </svg>
             </button>
             <div className="mb-10 font-thin text-cyan-700">
-              <a href="/reset-password">Forgot password?</a>
+              <Link to="/reset-password">Forgot password?</Link>
             </div>
             <div className="font-thin pt-4 text-center">
               © 2023 O'Brien Joinery PTY LTD. All Rights Reserved.

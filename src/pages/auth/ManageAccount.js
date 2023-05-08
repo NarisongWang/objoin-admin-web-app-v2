@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import {
   getAuth,
   updateProfile,
@@ -233,13 +235,13 @@ const ManageAccount = () => {
                 />
               </div>
               <div className="flex flex-col md:flex-row md:justify-between items-center text-blue-600">
-                <a
+                <Link
                   className="hidden md:block"
-                  href={`/reset-password?email=${user.email}`}
+                  to={`/reset-password?email=${user.email}`}
                   target="blank"
                 >
                   Forgot your current password?
-                </a>
+                </Link>
                 <button
                   className={`${
                     oldPassword !== '' &&
@@ -259,13 +261,13 @@ const ManageAccount = () => {
                 >
                   Change Password
                 </button>
-                <a
+                <Link
                   className="block md:hidden"
-                  href={`/reset-password?email=${user.email}`}
+                  to={`/reset-password?email=${user.email}`}
                   target="blank"
                 >
                   Forgot your current password?
-                </a>
+                </Link>
               </div>
             </div>
           </div>

@@ -1,13 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import { setSelectedMenu } from '../features/system/systemSlice';
 import { getAuth, signOut } from 'firebase/auth';
 import { FaUserEdit, FaSignOutAlt } from 'react-icons/fa';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Header = ({ showMobileMenu, setShowMobileMenu }) => {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const user = getAuth().currentUser;
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const buttonRef = useRef(null);
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -50,7 +53,7 @@ const Header = ({ showMobileMenu, setShowMobileMenu }) => {
               data-drawer-toggle="logo-sidebar"
               aria-controls="logo-sidebar"
               type="button"
-              className={`inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 ${
+              className={`inline-flex items-center p-2 text-sm text-blue-800 rounded-lg md:hidden hover:bg-gray-100 ${
                 showMobileMenu ? 'bg-gray-100' : ''
               } focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600`}
             >
@@ -68,13 +71,13 @@ const Header = ({ showMobileMenu, setShowMobileMenu }) => {
                 ></path>
               </svg>
             </button>
-            <a href="/">
+            <Link to="/" onClick={() => dispatch(setSelectedMenu('Dashboard'))}>
               <img
                 src="OBJOIN.png"
                 alt=""
                 className="ml-1 w-[140px] md:w-[180px]"
               ></img>
-            </a>
+            </Link>
           </div>
           <button
             id="userMenuButton"
@@ -116,14 +119,18 @@ const Header = ({ showMobileMenu, setShowMobileMenu }) => {
             </div>
             <ul className="py-1" role="none">
               <li>
-                <a
-                  href="/manage-account"
+                <Link
+                  to="/manage-account"
+                  onClick={() => {
+                    dispatch(setSelectedMenu(''));
+                    setShowMobileMenu(false);
+                  }}
                   className="flex flex-row items-center  px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                   role="menuitem"
                 >
-                  <FaUserEdit className="mr-2" />
+                  <FaUserEdit className="mr-2 text-blue-800" />
                   Manage Account
-                </a>
+                </Link>
               </li>
               <li>
                 <button
@@ -131,7 +138,7 @@ const Header = ({ showMobileMenu, setShowMobileMenu }) => {
                   className="flex flex-row w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                   role="menuitem"
                 >
-                  <FaSignOutAlt className="mr-2" />
+                  <FaSignOutAlt className="mr-2 text-blue-800" />
                   Sign out
                 </button>
               </li>
