@@ -14,6 +14,7 @@ import Dashboard from './pages/dashboard/Dashboard';
 import ManageAccount from './pages/auth/ManageAccount';
 import Login from './pages/auth/Login';
 import ResetPassword from './pages/auth/ResetPassword';
+import InstallationOrderList from './pages/installationOrders/InstallationOrderList';
 import ManageUsers from './pages/ManageUsers';
 import NotFound from './pages/NotFound';
 import Test from './pages/Test';
@@ -57,6 +58,10 @@ function App() {
               <Route path="/" element={<Dashboard />} />
               <Route path="/manage-account" element={<ManageAccount />} />
               <Route path="/manage-users" element={<ManageUsers />} />
+              <Route
+                path="/installation-orders"
+                element={<InstallationOrderList />}
+              />
               <Route path="*" element={<NotFound />} />
             </Route>
           </Route>
