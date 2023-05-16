@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  selectedMenu: 'Dashboard', // initial value of selected menu
+  selectedMenu: '', // initial value of selected menu
 };
 
 const menuSlice = createSlice({

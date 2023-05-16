@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import {
   getAuth,
   updateProfile,
@@ -52,6 +51,7 @@ const ManageAccount = () => {
       .then(() => {
         updatePassword(user, newPassword).then(() => {
           setIsLoading(false);
+          showChangePassForm(false);
           toast.success('You have successfully reset your password.');
         });
       })
@@ -102,10 +102,23 @@ const ManageAccount = () => {
                 Edit Profile
               </span>
               <button
-                className="mt-2 mr-3 w-7 h-7 rounded-full text-white flex justify-center items-center hover:bg-gray-300"
-                onClick={() => setShowEditForm(false)}
+                type="button"
+                onClick={() => setShowEditForm(null)}
+                className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 mt-2 mr-2 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
               >
-                <span className="text-3xl font-bold text-black">&times;</span>
+                <svg
+                  aria-hidden="true"
+                  className="w-5 h-5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  ></path>
+                </svg>
               </button>
             </div>
             <div className="p-4">
@@ -172,10 +185,23 @@ const ManageAccount = () => {
                 Change Password
               </span>
               <button
-                className="mt-2 mr-3 w-7 h-7 rounded-full text-white flex justify-center items-center hover:bg-gray-300"
-                onClick={() => setShowChangePassForm(false)}
+                type="button"
+                onClick={() => setShowChangePassForm(null)}
+                className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 mt-2 mr-2 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
               >
-                <span className="text-3xl font-bold text-black">&times;</span>
+                <svg
+                  aria-hidden="true"
+                  className="w-5 h-5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  ></path>
+                </svg>
               </button>
             </div>
             <div className="p-4">

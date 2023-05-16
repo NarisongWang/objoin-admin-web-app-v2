@@ -1,6 +1,6 @@
 function Spinner() {
   return (
-    <div className="bg-gray-200 bg-opacity-70 fixed top-0 left-0 w-full h-full flex justify-center items-center">
+    <div className="bg-gray-200 z-50 bg-opacity-70 fixed top-0 left-0 w-full h-full flex justify-center items-center">
       <svg
         className="w-12 h-12 animate-spin text-blue-700"
         viewBox="0 0 24 24"

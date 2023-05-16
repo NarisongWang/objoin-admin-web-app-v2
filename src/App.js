@@ -15,10 +15,10 @@ import ManageAccount from './pages/auth/ManageAccount';
 import Login from './pages/auth/Login';
 import ResetPassword from './pages/auth/ResetPassword';
 import InstallationOrderList from './pages/installationOrders/InstallationOrderList';
-import ManageUsers from './pages/ManageUsers';
+import SalesOrderList from './pages/salesOrders/SalesOrderList';
+import ManageUsers from './pages/users/ManageUsers';
+import DisplayPhoto from './pages/installationOrders/DisplayPhoto';
 import NotFound from './pages/NotFound';
-import Test from './pages/Test';
-import Test2 from './pages/Test2';
 import 'react-toastify/dist/ReactToastify.css';
 
 const BasicLayoutWithLeftMenu = () => {
@@ -49,10 +49,11 @@ function App() {
           {/* No layout no private route */}
           <Route path="/sign-in" element={<Login />} />
           <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/test" element={<Test />} />
-          <Route path="/test2" element={<Test2 />} />
-          {/* BasicLayout & PrivateRoute */}
+          {/* PrivateRoute */}
           <Route path="/" element={<PrivateRoutes />}>
+            {/* No layout */}
+            <Route path="/display-photo" element={<DisplayPhoto />} />
+            {/* Basic Layout With Left Menu */}
             <Route path="/" element={<BasicLayoutWithLeftMenu />}>
               <Route index element={<Dashboard />} />
               <Route path="/" element={<Dashboard />} />
@@ -62,6 +63,7 @@ function App() {
                 path="/installation-orders"
                 element={<InstallationOrderList />}
               />
+              <Route path="/sales-orders" element={<SalesOrderList />} />
               <Route path="*" element={<NotFound />} />
             </Route>
           </Route>
