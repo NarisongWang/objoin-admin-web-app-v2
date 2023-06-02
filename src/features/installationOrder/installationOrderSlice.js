@@ -215,7 +215,15 @@ export const installationOrderSlice = createSlice({
       .addCase(editInstallationOrder.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(editInstallationOrder.fulfilled, (state) => {
+      .addCase(editInstallationOrder.fulfilled, (state, action) => {
+        state.installationOrders = state.installationOrders.map(
+          (installationOrder) => {
+            if (installationOrder._id === action.payload._id) {
+              return action.payload;
+            }
+            return installationOrder;
+          }
+        );
         state.isLoading = false;
       })
       .addCase(editInstallationOrder.rejected, (state, action) => {

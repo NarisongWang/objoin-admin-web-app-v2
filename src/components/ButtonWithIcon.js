@@ -9,7 +9,7 @@ const ButtonWithIcon = ({ buttonName, icon: Icon, disabled, action }) => {
           : 'text-blue-700 hover:bg-gray-100 cursor-pointer'
       } rounded-lg dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}
       onClick={() => {
-        if (!disabled) {
+        if (!disabled && action !== undefined) {
           action();
         }
       }}

@@ -163,6 +163,7 @@ const SalesOrderList = () => {
                   currentPage={currentPage}
                   searchText={searchText}
                   select={select}
+                  setSelect={setSelect}
                   setShowDetail={setShowDetail}
                 />
               );

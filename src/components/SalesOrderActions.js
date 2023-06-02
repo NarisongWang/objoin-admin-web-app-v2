@@ -2,7 +2,7 @@ import React from 'react';
 import { FaDownload } from 'react-icons/fa';
 import ButtonWithIcon from './ButtonWithIcon';
 
-const SalesOrderActions = () => {
+const SalesOrderActions = ({ loadOrders }) => {
   return (
     <div>
       <div className="flex flex-row justify-center items-center">
@@ -10,6 +10,7 @@ const SalesOrderActions = () => {
           buttonName="Load Sales Orders"
           icon={FaDownload}
           disabled={false}
+          action={loadOrders}
         />
       </div>
     </div>

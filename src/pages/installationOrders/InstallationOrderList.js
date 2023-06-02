@@ -6,6 +6,7 @@ import {
   getTotalCount,
   getUsersAndFiles,
   setupInstallationOrder,
+  editInstallationOrder,
   deleteInstallationOrder,
   closeInstallationOrder,
 } from '../../features/installationOrder/installationOrderSlice';
@@ -104,6 +105,7 @@ const InstallationOrderList = () => {
     }
     const installationOrderId = select._id;
     const installationOrderNumber = select.installationOrderNumber;
+    console.log(installationOrderNumber);
     let fileUrl = [];
     for (let i = 0; i < selectedFiles.length; i++) {
       let url = selectedFiles[i].replaceAll('\\', '/');
@@ -144,13 +146,37 @@ const InstallationOrderList = () => {
           toast.success('Installation Order Setup Success!');
         })
         .catch(toast.error);
+    } else if (type === 'edit') {
+      console.log(deliverers, installers);
+      dispatch(
+        editInstallationOrder({
+          installationOrderId,
+          update: {
+            deliverers,
+            installers,
+            files: fileUrl,
+            localFilePath,
+          },
+        })
+      )
+        .unwrap()
+        .then(() => {
+          setIsEdit(false);
+          setInstallers([]);
+          setDeliverers([]);
+          setSelectedFiles([]);
+          setSelect(null);
+          toast.success('Installation Order Edit Success!');
+        })
+        .catch(toast.error);
     }
   };
 
   const openEditForm = () => {
-    // navigate(
-    //   `/installation-order-edit/${select._id}/edit/${currentPage}/${searchText}`
-    // );
+    setIsEdit(true);
+    dispatch(getUsersAndFiles(select._id)).then(() => {
+      setSelect(select);
+    });
   };
 
   const closeOrder = () => {
@@ -516,10 +542,7 @@ const InstallationOrderList = () => {
       {isSetup && (
         <div className="fixed top-0 left-0 z-50 w-full h-full bg-gray-500 bg-opacity-70 flex justify-center items-center">
           {/* Setup installation order form */}
-          <div
-            // onClick={(e) => e.stopPropagation()}
-            className="md:w-[700px] w-full bg-white h-full md:h-5/6 md:rounded-lg overflow-y-auto"
-          >
+          <div className="md:w-[700px] w-full bg-white h-full md:h-5/6 md:rounded-lg overflow-y-auto">
             <div className="flex flex-row justify-between pb-2 border-b">
               <span className="mt-2 ml-3 text-2xl text-black">
                 Setup Installation Order -{' '}
@@ -551,22 +574,22 @@ const InstallationOrderList = () => {
               <SelectStaff
                 label="Select Shipping Staff"
                 staffList={
-                  users && users.length > 0
-                    ? users.filter(
-                        (user) => user.customClaims.role === 'deliverer'
-                      )
-                    : []
+                  users //&& users.length > 0
+                  //   ? users.filter(
+                  //       (user) => user.customClaims.role === 'deliverer'
+                  //     )
+                  //   : []
                 }
                 onSelect={setDeliverers}
               />
               <SelectStaff
                 label="Select Installation Staff"
                 staffList={
-                  users && users.length > 0
-                    ? users.filter(
-                        (user) => user.customClaims.role === 'installer'
-                      )
-                    : []
+                  users //&& users.length > 0
+                  // ? users.filter(
+                  //     (user) => user.customClaims.role === 'installer'
+                  //   )
+                  // : []
                 }
                 onSelect={setInstallers}
               />
@@ -611,6 +634,107 @@ const InstallationOrderList = () => {
                   onClick={(e) => submitOrder(e, 'setup')}
                 >
                   Setup Installation Order
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {isEdit && (
+        <div className="fixed top-0 left-0 z-50 w-full h-full bg-gray-500 bg-opacity-70 flex justify-center items-center">
+          {/* Edit installation order form */}
+          <div className="md:w-[700px] w-full bg-white h-full md:h-5/6 md:rounded-lg overflow-y-auto">
+            <div className="flex flex-row justify-between pb-2 border-b">
+              <span className="mt-2 ml-3 text-2xl text-black">
+                Edit Installation Order -{' '}
+                <span className="text-blue-700">
+                  {select.installationOrderNumber}
+                </span>
+              </span>
+              <button
+                type="button"
+                onClick={() => setIsEdit(false)}
+                className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 mt-2 mr-2 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+              >
+                <svg
+                  aria-hidden="true"
+                  className="w-5 h-5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+            <div className="p-4">
+              <SelectStaff
+                label="Select Shipping Staff"
+                staffList={
+                  users //&& users.length > 0
+                  //   ? users.filter(
+                  //       (user) => user.customClaims.role === 'deliverer'
+                  //     )
+                  //   : []
+                }
+                onSelect={setDeliverers}
+              />
+              <SelectStaff
+                label="Select Installation Staff"
+                staffList={
+                  users //&& users.length > 0
+                  // ? users.filter(
+                  //     (user) => user.customClaims.role === 'installer'
+                  //   )
+                  // : []
+                }
+                onSelect={setInstallers}
+              />
+              <div className="mb-4">
+                <label className="block mb-2 text-sm font-medium text-gray-700">
+                  Select PDF Files
+                </label>
+                <div
+                  className="w-full border border-gray-500 p-2 rounded-md"
+                  type="select"
+                >
+                  {files.length !== 0 ? (
+                    files.map((directory, index) => (
+                      <PdfContainer
+                        key={index}
+                        directory={directory}
+                        selectedFiles={selectedFiles}
+                        setSelectedFiles={setSelectedFiles}
+                      />
+                    ))
+                  ) : select.installationOrderNumber ? (
+                    <div style={{ textAlign: 'left', color: 'grey' }}>
+                      * No PDF files found in{' '}
+                      <span style={{ color: 'blue', fontStyle: 'italic' }}>
+                        Z:\SalesOrders\
+                        {select.entryDate.toString().substring(0, 4)}\
+                        {select.customer}\{select.shipName.trim()} -{' '}
+                        {select.shipAddress.substring(
+                          0,
+                          select.shipAddress.length - 6
+                        )}{' '}
+                        - {select.installationOrderNumber}\
+                      </span>{' '}
+                      directory.
+                    </div>
+                  ) : null}
+                </div>
+              </div>
+              <div className="flex items-center justify-center">
+                <button
+                  className={`bg-blue-500 hover:bg-blue-600mb-3 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 mt-1`}
+                  onClick={(e) => submitOrder(e, 'edit')}
+                >
+                  Edit Installation Order
                 </button>
               </div>
             </div>

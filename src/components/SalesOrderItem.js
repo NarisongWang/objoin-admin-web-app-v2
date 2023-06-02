@@ -6,6 +6,7 @@ const SalesOrderItem = ({
   currentPage,
   searchText,
   select,
+  setSelect,
   setShowDetail,
 }) => {
   return (

@@ -34,7 +34,7 @@ const InstallationOrderActions = ({
         buttonName="Close"
         icon={FaMinusSquare}
         disabled={select && select.workStatus === 4 ? false : true}
-        action={select && select.workStatus === 1 ? closeOrder : undefined}
+        action={select && select.workStatus === 4 ? closeOrder : undefined}
       />
       <ButtonWithIcon
         buttonName="Delete"
