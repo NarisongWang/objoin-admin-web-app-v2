@@ -20,6 +20,7 @@ import ManageUsers from './pages/users/ManageUsers';
 import DisplayPhoto from './pages/installationOrders/DisplayPhoto';
 import NotFound from './pages/NotFound';
 import 'react-toastify/dist/ReactToastify.css';
+import InstallationOrderReport from './pages/installationOrders/InstallationOrderReport';
 
 const BasicLayoutWithLeftMenu = () => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
@@ -53,6 +54,10 @@ function App() {
           <Route path="/" element={<PrivateRoutes />}>
             {/* No layout */}
             <Route path="/display-photo" element={<DisplayPhoto />} />
+            <Route
+              path="/installation-order-report"
+              element={<InstallationOrderReport />}
+            />
             {/* Basic Layout With Left Menu */}
             <Route path="/" element={<BasicLayoutWithLeftMenu />}>
               <Route index element={<Dashboard />} />

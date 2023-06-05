@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import installationOrderAPI from './installationOrderAPI';
-import { initFiles } from '../../utils/utils';
 import { getAuth } from 'firebase/auth';
 
 const initialState = {
   installationOrders: [],
   totalCount: 0,
+  installationOrder: {},
   users: [],
   //this files state is used for installation order setup & edit
   files: [],
@@ -20,6 +20,26 @@ export const getInstallationOrders = createAsyncThunk(
       const token = await getAuth().currentUser.getIdToken();
       const data = await installationOrderAPI.getInstallationOrders(
         queryParams,
+        token
+      );
+      return data;
+    } catch (err) {
+      const message =
+        (err.response && err.response.data && err.response.data.message) ||
+        err.message ||
+        err.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const getInstallationOrder = createAsyncThunk(
+  'installationOrder/getInstallationOrder',
+  async (installationOrderId, thunkAPI) => {
+    try {
+      const token = await getAuth().currentUser.getIdToken();
+      const data = await installationOrderAPI.getInstallationOrder(
+        installationOrderId,
         token
       );
       return data;
@@ -161,6 +181,19 @@ export const installationOrderSlice = createSlice({
         state.installationOrders = action.payload;
       })
       .addCase(getInstallationOrders.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      // reducers for getInstallationOrder
+      .addCase(getInstallationOrder.pending, (state) => {
+        state.isLoading = true;
+        state.error = '';
+      })
+      .addCase(getInstallationOrder.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.installationOrder = action.payload;
+      })
+      .addCase(getInstallationOrder.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })

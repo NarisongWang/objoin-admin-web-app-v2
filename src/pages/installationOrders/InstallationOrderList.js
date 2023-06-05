@@ -89,6 +89,13 @@ const InstallationOrderList = () => {
     });
   };
 
+  const openEditForm = () => {
+    setIsEdit(true);
+    dispatch(getUsersAndFiles(select._id)).then(() => {
+      setSelect(select);
+    });
+  };
+
   const submitOrder = (e, type) => {
     e.preventDefault();
     if (selectedFiles.length === 0) {
@@ -105,7 +112,6 @@ const InstallationOrderList = () => {
     }
     const installationOrderId = select._id;
     const installationOrderNumber = select.installationOrderNumber;
-    console.log(installationOrderNumber);
     let fileUrl = [];
     for (let i = 0; i < selectedFiles.length; i++) {
       let url = selectedFiles[i].replaceAll('\\', '/');
@@ -147,7 +153,6 @@ const InstallationOrderList = () => {
         })
         .catch(toast.error);
     } else if (type === 'edit') {
-      console.log(deliverers, installers);
       dispatch(
         editInstallationOrder({
           installationOrderId,
@@ -170,13 +175,6 @@ const InstallationOrderList = () => {
         })
         .catch(toast.error);
     }
-  };
-
-  const openEditForm = () => {
-    setIsEdit(true);
-    dispatch(getUsersAndFiles(select._id)).then(() => {
-      setSelect(select);
-    });
   };
 
   const closeOrder = () => {
@@ -214,7 +212,7 @@ const InstallationOrderList = () => {
   };
 
   const openReport = () => {
-    window.open(`/installation-order-report/${select._id}`, '_blank');
+    window.open(`/installation-order-report?id=${select._id}`, '_blank');
   };
 
   if (isLoading) {
@@ -574,22 +572,22 @@ const InstallationOrderList = () => {
               <SelectStaff
                 label="Select Shipping Staff"
                 staffList={
-                  users //&& users.length > 0
-                  //   ? users.filter(
-                  //       (user) => user.customClaims.role === 'deliverer'
-                  //     )
-                  //   : []
+                  users && users.length > 0
+                    ? users.filter(
+                        (user) => user.customClaims.role === 'deliverer'
+                      )
+                    : []
                 }
                 onSelect={setDeliverers}
               />
               <SelectStaff
                 label="Select Installation Staff"
                 staffList={
-                  users //&& users.length > 0
-                  // ? users.filter(
-                  //     (user) => user.customClaims.role === 'installer'
-                  //   )
-                  // : []
+                  users && users.length > 0
+                    ? users.filter(
+                        (user) => user.customClaims.role === 'installer'
+                      )
+                    : []
                 }
                 onSelect={setInstallers}
               />
@@ -675,22 +673,22 @@ const InstallationOrderList = () => {
               <SelectStaff
                 label="Select Shipping Staff"
                 staffList={
-                  users //&& users.length > 0
-                  //   ? users.filter(
-                  //       (user) => user.customClaims.role === 'deliverer'
-                  //     )
-                  //   : []
+                  users && users.length > 0
+                    ? users.filter(
+                        (user) => user.customClaims.role === 'deliverer'
+                      )
+                    : []
                 }
                 onSelect={setDeliverers}
               />
               <SelectStaff
                 label="Select Installation Staff"
                 staffList={
-                  users //&& users.length > 0
-                  // ? users.filter(
-                  //     (user) => user.customClaims.role === 'installer'
-                  //   )
-                  // : []
+                  users && users.length > 0
+                    ? users.filter(
+                        (user) => user.customClaims.role === 'installer'
+                      )
+                    : []
                 }
                 onSelect={setInstallers}
               />

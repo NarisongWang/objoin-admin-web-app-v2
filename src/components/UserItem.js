@@ -49,9 +49,13 @@ const UserItem = ({ user, select, setSelect }) => {
       </td>
       <td className="p-4 hidden xs:table-cell ">
         {user.disabled ? (
-          <span className="bg-gray-200 px-7 rounded-lg">Disabled</span>
+          <span className="bg-gray-600 px-7 text-white rounded-lg">
+            Disabled
+          </span>
         ) : (
-          <span className="bg-green-200 px-7 rounded-lg">Active</span>
+          <span className="bg-green-600 px-7 text-white rounded-lg">
+            Active
+          </span>
         )}
       </td>
     </tr>

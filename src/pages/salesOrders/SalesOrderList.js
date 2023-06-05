@@ -73,12 +73,12 @@ const SalesOrderList = () => {
     if (select.length === 0) {
       toast.warning('Please select at least one sales order!');
     } else {
-      const selectOrder = select.sort(function (a, b) {
+      const sortedOrder = select.sort(function (a, b) {
         return a - b;
       });
       let selectedSalesOrders = [];
-      for (let i = 0; i < selectOrder.length; i++) {
-        selectedSalesOrders.push(salesOrders[selectOrder[i]]);
+      for (let i = 0; i < sortedOrder.length; i++) {
+        selectedSalesOrders.push(salesOrders[sortedOrder[i]]);
       }
       dispatch(createInstallationOrders({ salesOrders: selectedSalesOrders }))
         .unwrap()
@@ -155,13 +155,12 @@ const SalesOrderList = () => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700 text-center">
-            {salesOrders.map((salesOrder) => {
+            {salesOrders.map((salesOrder, index) => {
               return (
                 <SalesOrderItem
                   key={salesOrder.ID}
+                  index={index}
                   salesOrder={salesOrder}
-                  currentPage={currentPage}
-                  searchText={searchText}
                   select={select}
                   setSelect={setSelect}
                   setShowDetail={setShowDetail}

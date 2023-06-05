@@ -1,21 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { parseDate } from '../utils/utils';
 
 const SalesOrderItem = ({
+  index,
   salesOrder,
-  currentPage,
-  searchText,
   select,
   setSelect,
   setShowDetail,
 }) => {
+  const [checked, setChecked] = useState(false);
+  const checkSelection = () => {
+    const newChecked = !checked;
+    let newSelect = [...select];
+    if (newChecked) {
+      newSelect.push(index);
+    } else {
+      var i = newSelect.indexOf(index);
+      if (i !== -1) {
+        newSelect.splice(i, 1);
+      }
+    }
+    setSelect(newSelect);
+    setChecked(newChecked);
+  };
   return (
-    <tr className="hover:bg-gray-100 dark:hover:bg-gray-700">
+    <tr
+      className={`dark:hover:bg-gray-700 ${
+        checked ? 'bg-blue-200' : 'hover:bg-gray-100'
+      }`}
+    >
       <td className="w-4 p-4">
         <div className="flex items-center">
           <input
-            id="checkbox-194556"
-            aria-describedby="checkbox-1"
+            checked={salesOrder.loaded ? true : checked}
+            onChange={checkSelection}
             type="checkbox"
             className="w-4 h-4 border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:focus:ring-primary-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600"
             disabled={salesOrder.loaded}
