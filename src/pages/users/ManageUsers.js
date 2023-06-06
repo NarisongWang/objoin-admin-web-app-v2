@@ -1,19 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
-import { getAllUsers, createUser } from '../../features/user/userSlice';
+import {
+  getAllUsers,
+  getEmployees,
+  createUser,
+  disableUser,
+  enableUser,
+} from '../../features/user/userSlice';
 import { toast } from 'react-toastify';
 import Spinner from '../../components/Spinner';
 import Pagination from '../../components/Pagination';
 import SearchBar from '../../components/SearchBar';
 import ManageUserActions from '../../components/ManageUserActions';
 import UserItem from '../../components/UserItem';
+import EmployeeList from '../../components/EmployeeList';
+import { validateEmail } from '../../utils/utils';
 
 const ManageUsers = () => {
   const pageSize = 10;
   const [currentPage, setCurrentPage] = useState(1);
   const [searchText, setSearchText] = useState('');
-  const [select, setSelect] = useState(null);
+  const [select, setSelect] = useState();
 
   // for create new user
   const [newUserEmail, setNewUserEmail] = useState('');
@@ -24,13 +32,34 @@ const ManageUsers = () => {
 
   const [showInviteForm, setShowInviteForm] = useState(false);
 
-  const { users, isLoading, error } = useSelector((state) => state.user);
+  const { users, employees, isLoading, error } = useSelector(
+    (state) => state.user
+  );
   const dispatch = useDispatch();
+
+  //search
+  const [dispList, setDispList] = useState(users);
+
+  const onInputChange = (e) => {
+    const newDispList = users.filter(
+      (user) =>
+        user.displayName.toLowerCase().indexOf(e.target.value.toLowerCase()) !==
+          -1 ||
+        user.email.toLowerCase().indexOf(e.target.value.toLowerCase()) !== -1
+    );
+    setDispList(newDispList);
+    setSearchText(e.target.value);
+  };
 
   useEffect(() => {
     dispatch(getAllUsers());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    setDispList(users);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [users]);
 
   useEffect(() => {
     if (error !== '') {
@@ -40,6 +69,18 @@ const ManageUsers = () => {
 
   const onCreate = () => {
     //email, displayName, role, phoneNumber, photoURL
+    if (!validateEmail(newUserEmail)) {
+      toast.warning('Email address is not valid!');
+      return;
+    }
+    if (newUserDisplayName === '') {
+      toast.warning('Please enter display name for the user!');
+      return;
+    }
+    if (newUserRole === '') {
+      toast.warning('Please assign this user a role!');
+      return;
+    }
     const user = {
       email: newUserEmail,
       displayName: newUserDisplayName,
@@ -62,9 +103,34 @@ const ManageUsers = () => {
 
   const onPageChange = (page) => {};
 
-  const search = () => {};
+  const openInviteForm = () => {
+    dispatch(getEmployees())
+      .unwrap()
+      .then(() => {
+        setShowInviteForm(true);
+      })
+      .catch(toast.error);
+  };
 
-  const clearSearch = () => {};
+  const disableAccount = (uid) => {
+    dispatch(disableUser(uid))
+      .unwrap()
+      .then(() => {
+        toast.success('User has been disabled!');
+        setSelect(undefined);
+      })
+      .catch(toast.error);
+  };
+
+  const enableAccount = (uid) => {
+    dispatch(enableUser(uid))
+      .unwrap()
+      .then(() => {
+        toast.success('User has been enabled!');
+        setSelect(undefined);
+      })
+      .catch(toast.error);
+  };
 
   if (isLoading) {
     return <Spinner />;
@@ -76,18 +142,25 @@ const ManageUsers = () => {
       <div className="mb-0 h-[50px]">
         <div className="fixed top-0 left-0 bg-white w-full h-[195px] lg:h-[160px] border-b"></div>
         <div className="fixed bg-white right-4 lg:left-[280px]">
-          <SearchBar
-            placeholder="Display Name"
-            searchText={searchText}
-            setSearchText={setSearchText}
-            search={search}
-            clearSearch={clearSearch}
-          />
+          <div className="flex items-center">
+            <input
+              type="text"
+              name="email"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block h-7 p-2.5 "
+              value={searchText}
+              onChange={(e) => {
+                onInputChange(e);
+              }}
+              placeholder="Filter by name or email"
+            />
+          </div>
         </div>
         <div className="fixed top-[140px] right-4 md:top-[150px] lg:top-[111px] bg-white">
           <ManageUserActions
             select={select}
-            setShowInviteForm={setShowInviteForm}
+            openInviteForm={openInviteForm}
+            disableAccount={disableAccount}
+            enableAccount={enableAccount}
           />
         </div>
       </div>
@@ -132,7 +205,7 @@ const ManageUsers = () => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700 text-center">
-            {users.map((user) => {
+            {dispList.map((user) => {
               return (
                 <UserItem
                   key={user.uid}
@@ -181,8 +254,8 @@ const ManageUsers = () => {
                 </svg>
               </button>
             </div>
-            <div className="p-4 flex flex-row items-center justify-between">
-              <div className="w-full mb-4">
+            <div className="p-4 flex flex-row items-start justify-between">
+              <div className="w-[400px] mb-4">
                 <div>
                   <label className="block mb-2 text-md font-medium text-gray-700">
                     Email Address <span className="text-red-600">*</span>
@@ -269,7 +342,14 @@ const ManageUsers = () => {
                   </button>
                 </div>
               </div>
-              <div className="bg-gray-100 w-[300px] h-full mt-0"></div>
+              <div className="bg-gray-100 rounded-lg w-[300px] h-[450px] mx-5 p-3 overflow-y-auto">
+                <EmployeeList
+                  employees={employees}
+                  setNewUserEmail={setNewUserEmail}
+                  setNewUserDisplayName={setNewUserDisplayName}
+                  setNewUserPhoneNumber={setNewUserPhoneNumber}
+                />
+              </div>
             </div>
           </div>
         </div>

@@ -5,7 +5,7 @@ const API_URL_LIST =
   process.env.REACT_APP_API_SERVER + '/admin/installationorders/';
 const API_URL_COUNT = process.env.REACT_APP_API_SERVER + '/admin/countorders';
 const API_URL_USERSANDFILES =
-  process.env.REACT_APP_API_SERVER + '/admin/usersandfiles';
+  process.env.REACT_APP_API_SERVER + '/admin/usersandfiles/';
 const API_URL_SETUP = process.env.REACT_APP_API_SERVER + '/admin/setuporder';
 const API_URL_EDIT = process.env.REACT_APP_API_SERVER + '/admin/editorder';
 const API_URL_CLOSE = process.env.REACT_APP_API_SERVER + '/admin/closeorder';

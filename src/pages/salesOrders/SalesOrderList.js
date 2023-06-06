@@ -104,7 +104,7 @@ const SalesOrderList = () => {
           />
         </div>
         <div className="fixed top-[140px] right-4 md:top-[150px] lg:top-[111px] bg-white">
-          <SalesOrderActions loadOrders={loadOrders} />
+          <SalesOrderActions select={select} loadOrders={loadOrders} />
         </div>
       </div>
 
