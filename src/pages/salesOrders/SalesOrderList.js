@@ -108,7 +108,7 @@ const SalesOrderList = () => {
         </div>
       </div>
 
-      {/* Installation Order Table Part */}
+      {/* Sales Order Table Part */}
       <div className="overflow-hidden shadow mt-12 md:mt-10 lg:mt-1">
         <table className="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-600">
           <thead className="bg-blue-50 dark:bg-gray-700">

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 const EmployeeList = ({
   employees,
@@ -6,6 +6,25 @@ const EmployeeList = ({
   setNewUserDisplayName,
   setNewUserPhoneNumber,
 }) => {
+  //search
+  const [searchText, setSearchText] = useState();
+  const [dispList, setDispList] = useState(employees);
+
+  const onInputChange = (e) => {
+    const newDispList = employees.filter(
+      (employee) =>
+        employee.FirstName.toLowerCase().indexOf(
+          e.target.value.toLowerCase()
+        ) !== -1 ||
+        employee.LastName.toLowerCase().indexOf(
+          e.target.value.toLowerCase()
+        ) !== -1 ||
+        employee.email.toLowerCase().indexOf(e.target.value.toLowerCase()) !==
+          -1
+    );
+    setDispList(newDispList);
+    setSearchText(e.target.value);
+  };
   const onDoubleClick = (employee) => {
     setNewUserEmail(employee.email);
     setNewUserDisplayName(employee.FirstName);
@@ -15,14 +34,19 @@ const EmployeeList = ({
   };
   return (
     <div>
-      <div className="flex flex-row justify-between h-10 border border-gray-500 p-2 rounded-md ">
-        <input className="p-1 px-2 appearance-none outline-none w-full bg-gray-100 text-gray-800" />
+      <div className="flex flex-row justify-between h-10 border border-slate-500 p-2 rounded-md ">
+        <input
+          className="p-1 px-2 appearance-none outline-none w-full bg-slate-50 text-gray-800"
+          placeholder="Search by name or email"
+          value={searchText}
+          onChange={onInputChange}
+        />
       </div>
       <div>
-        {employees &&
-          employees.map((employee) => (
+        {dispList &&
+          dispList.map((employee) => (
             <div
-              className="hover:bg-gray-200 bg-white rounded-md mx-1 px-1 my-2"
+              className="hover:bg-gray-200 bg-white border rounded-md mx-1 px-1 my-2"
               onDoubleClick={() => {
                 onDoubleClick(employee);
               }}
@@ -32,7 +56,7 @@ const EmployeeList = ({
                   {employee.FirstName}
                 </div>
                 <div className="text-sm  text-green-700">
-                  {employee.CellPhone}
+                  {employee.LastName}
                 </div>
               </div>
               {employee.email ? (

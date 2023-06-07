@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
 import {
   getAllUsers,
   getEmployees,
@@ -10,16 +9,12 @@ import {
 } from '../../features/user/userSlice';
 import { toast } from 'react-toastify';
 import Spinner from '../../components/Spinner';
-import Pagination from '../../components/Pagination';
-import SearchBar from '../../components/SearchBar';
 import ManageUserActions from '../../components/ManageUserActions';
 import UserItem from '../../components/UserItem';
 import EmployeeList from '../../components/EmployeeList';
 import { validateEmail } from '../../utils/utils';
 
 const ManageUsers = () => {
-  const pageSize = 10;
-  const [currentPage, setCurrentPage] = useState(1);
   const [searchText, setSearchText] = useState('');
   const [select, setSelect] = useState();
 
@@ -100,8 +95,6 @@ const ManageUsers = () => {
       })
       .catch(toast.error);
   };
-
-  const onPageChange = (page) => {};
 
   const openInviteForm = () => {
     dispatch(getEmployees())
@@ -218,14 +211,6 @@ const ManageUsers = () => {
           </tbody>
         </table>
       </div>
-      {/* pagination part */}
-      <Pagination
-        className="pagination-bar"
-        currentPage={currentPage}
-        totalCount={users.length}
-        pageSize={pageSize}
-        onPageChange={(page) => onPageChange(page)}
-      />
       {/* Invite new user form */}
       {showInviteForm && (
         <div className="fixed top-0 left-0 z-50 w-full h-full bg-gray-500 bg-opacity-70 flex justify-center items-center">
@@ -342,13 +327,18 @@ const ManageUsers = () => {
                   </button>
                 </div>
               </div>
-              <div className="bg-gray-100 rounded-lg w-[300px] h-[450px] mx-5 p-3 overflow-y-auto">
-                <EmployeeList
-                  employees={employees}
-                  setNewUserEmail={setNewUserEmail}
-                  setNewUserDisplayName={setNewUserDisplayName}
-                  setNewUserPhoneNumber={setNewUserPhoneNumber}
-                />
+              <div>
+                <div className=" bg-slate-50 rounded-lg w-[300px] h-[450px] mx-5 p-3 overflow-y-auto">
+                  <EmployeeList
+                    employees={employees}
+                    setNewUserEmail={setNewUserEmail}
+                    setNewUserDisplayName={setNewUserDisplayName}
+                    setNewUserPhoneNumber={setNewUserPhoneNumber}
+                  />
+                </div>
+                <div className="text-center text-sm italic text-red-500 mt-1">
+                  *Double click the staff to auto fill.
+                </div>
               </div>
             </div>
           </div>

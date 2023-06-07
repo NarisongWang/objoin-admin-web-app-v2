@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { getInstallationOrder } from '../../features/installationOrder/installationOrderSlice';
 import { parseDate, parseTime } from '../../utils/utils';
 import Spinner from '../../components/Spinner';
-import CheckListItem from '../../components/CheckListItem';
+import ShowCheckListItem from '../../components/ShowCheckListItem';
 
 const InstallationOrderReport = () => {
   const [searchParams] = useSearchParams();
@@ -270,7 +270,7 @@ const InstallationOrderReport = () => {
         {installationOrder.checkList
           ? installationOrder.checkList.map((checkItem, index) => {
               return (
-                <CheckListItem
+                <ShowCheckListItem
                   key={index}
                   title={checkItem.title}
                   status={checkItem.status}
