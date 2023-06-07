@@ -33,7 +33,7 @@ const InstallationOrderReport = () => {
   }
 
   return (
-    <div className="flex flex-row items-center justify-center mx-1">
+    <div className="flex flex-col items-center justify-center mx-1">
       <div className="w-11/12">
         {/* Basic installation order info */}
         <div className="text-center font-bold text-2xl mt-3">
@@ -279,6 +279,7 @@ const InstallationOrderReport = () => {
               );
             })
           : ''}
+        <br clear="ALL" />
         <div className="break-after-page"></div>
         {/* Delivery photos & comments */}
         <div className="uppercase font-bold text-center text-lg">
@@ -326,6 +327,7 @@ const InstallationOrderReport = () => {
               </div>
             </div>
           )}
+        <br clear="ALL" />
         <div className="break-after-page"></div>
         {/* Delivery photos & comments */}
         <div className="uppercase font-bold text-center text-lg">

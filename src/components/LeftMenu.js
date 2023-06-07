@@ -13,7 +13,8 @@ const LeftMenu = ({ showMobileMenu, setShowMobileMenu }) => {
   const salesOrder = 'Sales Orders';
   const checkList = 'Manage Check List';
   const manageUser = 'Manage Users';
-  const inbox = 'Help Center';
+  const inbox = 'Inbox';
+  const help = 'Help Center';
 
   useEffect(() => {
     if (showMobileMenu) {
@@ -137,7 +138,7 @@ const LeftMenu = ({ showMobileMenu, setShowMobileMenu }) => {
               } dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700`}
             >
               <svg
-                className="flex-shrink-0 w-6 h-6 ml-1 text-blue-800 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                className="flex-shrink-0 w-6 h-6 ml-1 mt-1 text-blue-800 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                 viewBox="0 0 17 17"
                 fill="currentColor"
                 xmlns="http://www.w3.org/2000/svg"
@@ -181,7 +182,7 @@ const LeftMenu = ({ showMobileMenu, setShowMobileMenu }) => {
             </Link>
           </li>
 
-          <li>
+          {/* <li>
             <Link
               to="/inbox"
               onClick={() => handleClick(inbox)}
@@ -200,9 +201,29 @@ const LeftMenu = ({ showMobileMenu, setShowMobileMenu }) => {
                 <path d="M3 5a2 2 0 012-2h1a1 1 0 010 2H5v7h2l1 2h4l1-2h2V5h-1a1 1 0 110-2h1a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5z"></path>
               </svg>
               <span className="flex-1 ml-3 whitespace-nowrap">{inbox}</span>
-              {/* <span className="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">
-                  3
-                </span> */}
+              <span className="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">
+                3
+              </span>
+            </Link>
+          </li> */}
+          <li>
+            <Link
+              to="/help"
+              onClick={() => handleClick(help)}
+              className={`flex items-center p-2 text-gray-900 text-lg rounded-lg ${
+                selectedMenu === help ? 'bg-blue-100' : ''
+              } dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700`}
+            >
+              <svg
+                aria-hidden="true"
+                className="flex-shrink-0 w-6 h-6 ml-[6px] mt-1 text-blue-800 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.496 6.033h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286a.237.237 0 0 0 .241.247zm2.325 6.443c.61 0 1.029-.394 1.029-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94 0 .533.425.927 1.01.927z" />
+              </svg>
+              <span className="flex-1 ml-[6px] whitespace-nowrap">{help}</span>
             </Link>
           </li>
         </ul>

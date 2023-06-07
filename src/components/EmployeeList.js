@@ -44,8 +44,10 @@ const EmployeeList = ({
       </div>
       <div>
         {dispList &&
-          dispList.map((employee) => (
+          dispList.map((employee, index) => (
             <div
+              key={index}
+              id={index}
               className="hover:bg-gray-200 bg-white border rounded-md mx-1 px-1 my-2"
               onDoubleClick={() => {
                 onDoubleClick(employee);

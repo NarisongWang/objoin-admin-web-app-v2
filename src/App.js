@@ -22,6 +22,7 @@ import NotFound from './pages/NotFound';
 import 'react-toastify/dist/ReactToastify.css';
 import InstallationOrderReport from './pages/installationOrders/InstallationOrderReport';
 import ManageCheckList from './pages/checkList/ManageCheckList';
+import UserManual from './pages/UserManual';
 
 const BasicLayoutWithLeftMenu = () => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
@@ -66,6 +67,7 @@ function App() {
               <Route path="/manage-account" element={<ManageAccount />} />
               <Route path="/manage-users" element={<ManageUsers />} />
               <Route path="/check-list" element={<ManageCheckList />} />
+              <Route path="/help" element={<UserManual />} />
               <Route
                 path="/installation-orders"
                 element={<InstallationOrderList />}

@@ -21,11 +21,12 @@ const Login = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
-        setIsLoading(true);
+        setIsLoading(false);
         navigate('/');
       })
       .catch((error) => {
         toast.error(error.message);
+        setIsLoading(false);
       });
   };
 

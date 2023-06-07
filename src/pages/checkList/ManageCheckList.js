@@ -60,7 +60,7 @@ const ManageCheckList = () => {
   };
 
   const handleDelete = (index) => {
-    if (window.confirm('Are you sure you want to delete this item?')) {
+    if (window.confirm('Do you want to delete this item?')) {
       const newCheckListState = [...checkListState];
       newCheckListState.splice(index, 1);
       newCheckListState.forEach((item, i) => {

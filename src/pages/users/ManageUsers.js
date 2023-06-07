@@ -106,23 +106,27 @@ const ManageUsers = () => {
   };
 
   const disableAccount = (uid) => {
-    dispatch(disableUser(uid))
-      .unwrap()
-      .then(() => {
-        toast.success('User has been disabled!');
-        setSelect(undefined);
-      })
-      .catch(toast.error);
+    if (window.confirm('Do you want to disable the selected account?')) {
+      dispatch(disableUser(uid))
+        .unwrap()
+        .then(() => {
+          toast.success('User has been disabled!');
+          setSelect(undefined);
+        })
+        .catch(toast.error);
+    }
   };
 
   const enableAccount = (uid) => {
-    dispatch(enableUser(uid))
-      .unwrap()
-      .then(() => {
-        toast.success('User has been enabled!');
-        setSelect(undefined);
-      })
-      .catch(toast.error);
+    if (window.confirm('Do you want to enable the selected account?')) {
+      dispatch(enableUser(uid))
+        .unwrap()
+        .then(() => {
+          toast.success('User has been enabled!');
+          setSelect(undefined);
+        })
+        .catch(toast.error);
+    }
   };
 
   if (isLoading) {
@@ -134,12 +138,12 @@ const ManageUsers = () => {
       {/* Search bar and action buttons */}
       <div className="mb-0 h-[50px]">
         <div className="fixed top-0 left-0 bg-white w-full h-[195px] lg:h-[160px] border-b"></div>
-        <div className="fixed bg-white right-4 lg:left-[280px]">
+        <div className="fixed mt-[6px] bg-white right-4 lg:left-[280px]">
           <div className="flex items-center">
             <input
               type="text"
               name="email"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block h-7 p-2.5 "
+              className="bg-gray-50 w-60 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block h-7 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
               value={searchText}
               onChange={(e) => {
                 onInputChange(e);
@@ -328,7 +332,7 @@ const ManageUsers = () => {
                 </div>
               </div>
               <div>
-                <div className=" bg-slate-50 rounded-lg w-[300px] h-[450px] mx-5 p-3 overflow-y-auto">
+                <div className=" bg-slate-50 rounded-lg w-[300px] h-[450px] mx-5 p-3 border border-gray-400 overflow-y-auto">
                   <EmployeeList
                     employees={employees}
                     setNewUserEmail={setNewUserEmail}

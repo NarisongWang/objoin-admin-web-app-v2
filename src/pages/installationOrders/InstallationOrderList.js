@@ -178,7 +178,7 @@ const InstallationOrderList = () => {
   };
 
   const closeOrder = () => {
-    if (window.confirm('Are you sure you want to close this order?')) {
+    if (window.confirm('Do you want to close this order?')) {
       dispatch(closeInstallationOrder({ installationOrderId: select._id }))
         .unwrap()
         .then(() => {
@@ -195,7 +195,7 @@ const InstallationOrderList = () => {
   };
 
   const deleteOrder = () => {
-    if (window.confirm('Are you sure you want to delete this order?')) {
+    if (window.confirm('Do you want to delete this order?')) {
       dispatch(deleteInstallationOrder({ installationOrderId: select._id }))
         .unwrap()
         .then(() => {
