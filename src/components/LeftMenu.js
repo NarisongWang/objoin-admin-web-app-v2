@@ -13,7 +13,7 @@ const LeftMenu = ({ showMobileMenu, setShowMobileMenu }) => {
   const salesOrder = 'Sales Orders';
   const checkList = 'Manage Check List';
   const manageUser = 'Manage Users';
-  const inbox = 'Inbox';
+  //const inbox = 'Inbox';
   const help = 'Help Center';
 
   useEffect(() => {
